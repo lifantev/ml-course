@@ -1,5 +1,5 @@
-import numpy as np
 
+import numpy as np
 
 class LossAndDerivatives:
     @staticmethod
@@ -33,7 +33,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE    
-        return 
+        return np.mean(np.abs(X.dot(w) - Y))
 
     @staticmethod
     def l2_reg(w):
@@ -41,13 +41,12 @@ class LossAndDerivatives:
         w : numpy array of shape (`n_features`, `target_dimentionality`) or (`n_features`,)
 
         Return: float
-            single number with sum of squared elements of the weight matrix ( \sum_{ij} w_{ij}^2 )
+            single number with sum of squared elements of the weight matrix ( sum_{ij} w_{ij}^2 )
 
         Computes the L2 regularization term for the weight matrix w.
         """
-        
         # YOUR CODE HERE
-        return 
+        return np.sum(w ** 2)
 
     @staticmethod
     def l1_reg(w):
@@ -55,13 +54,13 @@ class LossAndDerivatives:
         w : numpy array of shape (`n_features`, `target_dimentionality`)
 
         Return : float
-            single number with sum of the absolute values of the weight matrix ( \sum_{ij} |w_{ij}| )
+            single number with sum of the absolute values of the weight matrix ( sum_{ij} |w_{ij}| )
         
         Computes the L1 regularization term for the weight matrix w.
         """
 
         # YOUR CODE HERE
-        return 
+        return np.sum(np.abs(w)) 
 
     @staticmethod
     def no_reg(w):
@@ -87,7 +86,18 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        n = X.shape[0]
+        if Y.ndim == 1:
+            Y = Y[:, np.newaxis]
+            
+        target_ndim = 1 if w.shape[1] == 1 else w.shape[1]
+        
+        gradient = (2/n) * X.T.dot(X.dot(w) - Y)
+        
+        if gradient.ndim > 1:
+            gradient /= target_ndim
+        
+        return gradient
 
     @staticmethod
     def mae_derivative(X, Y, w):
@@ -106,7 +116,19 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        n = X.shape[0]
+        if Y.ndim == 1:
+            Y = Y[:, np.newaxis]
+
+        target_ndim = 1 if w.shape[1] == 1 else w.shape[1]
+
+        sign = np.sign(X.dot(w) - Y)
+        gradient = (1/n) * X.T.dot(sign)
+
+        if gradient.ndim > 1:
+            gradient /= target_ndim
+        
+        return gradient
 
     @staticmethod
     def l2_reg_derivative(w):
@@ -119,7 +141,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return 2*w
 
     @staticmethod
     def l1_reg_derivative(w):
@@ -133,7 +155,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 
+        return np.sign(w) 
 
     @staticmethod
     def no_reg_derivative(w):
@@ -141,4 +163,3 @@ class LossAndDerivatives:
         Simply ignores the derivative
         """
         return np.zeros_like(w)
-
