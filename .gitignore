@@ -115,5 +115,7 @@ testing/
 /week0_03_linear_classification/notMNIST_small
 /week0_11_cnn/day12_image_processing/data
 /week0_12_unsupervised/week0_12_unsupervised/quora.txt
+/homeworks/lab02_boosting/UCI HAR Dataset/
+/homeworks/lab02_boosting/catboost_info
 *.gz
 *.zip
